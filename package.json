@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/HaganeSoft/ngHagane/issues"
   },
-  "homepage": "https://github.com/HaganeSoft/ngHagane#readme"
+  "homepage": "https://github.com/HaganeSoft/ngHagane#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0"
+  }
 }

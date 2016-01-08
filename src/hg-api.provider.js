@@ -8,7 +8,7 @@ ngHagane.constant('MODULE_VERSION', '0.0.1');
 // 	/* more stuff here */
 // });
 
-ngHagane.provider("hagane", function () {
+ngHagane.provider('hgApi', function () {
 	this.server;
 	this.appToken;
 	this.accessToken;
