@@ -1,0 +1,23 @@
+{
+  "name": "angular-hagane",
+  "version": "0.0.1",
+  "description": "Angular module for Hagane API",
+  "main": "ngHagane.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaganeSoft/ngHagane.git"
+  },
+  "keywords": [
+    "angular",
+    "hagane"
+  ],
+  "author": "Hagane Software",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HaganeSoft/ngHagane/issues"
+  },
+  "homepage": "https://github.com/HaganeSoft/ngHagane#readme"
+}
