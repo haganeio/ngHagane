@@ -1,0 +1,6 @@
+<md-list>
+  <div ng-repeat="item in items" ng-switch="item.type">
+    <md-list-item ng-switch-default ng-class="{active: activeItem === $index }" ng-href="{{item.route}}" ng-click="activeItem = $index"><md-icon ng-if="item.icon" md-font-set="{{item.iconFontSet || 'material-icons'}}">{{item.icon}}</md-icon>{{item.name}}</md-list-item>
+    <md-devider ng-switch-when="devider"></md-devider>
+  </div>
+</md-list>

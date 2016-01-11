@@ -1,0 +1,34 @@
+<md-dialog aria-label="Modificación de Usuario PYME"  ng-cloak>
+	<form>
+		<md-toolbar layout="row" layout-padding layout-align="start center">
+			<span class="text-center">Modificación de Usuario PYME</span>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon aria-label="Close dialog">close</md-icon>
+			</md-button>
+		</md-toolbar>
+		<md-dialog-content flex-order="0">
+			<md-content layout="row" layout-sm="column" layout-wrap layout-padding>
+				<md-input-container flex>
+					<md-icon md-font-set="material-icons">person</md-icon>
+					<input ng-model="usuarioResponsableForm.nombre" type="text" placeholder="Nombre" ng-required="true">
+				</md-input-container>
+				<md-input-container flex>
+					<input ng-model="usuarioResponsableForm.apellido_paterno" type="text" placeholder="Apellido paterno" ng-required="true">
+				</md-input-container>
+				<md-input-container flex>
+					<input ng-model="usuarioResponsableForm.apellido_materno" type="text" placeholder="Apellido materno" ng-required="true">
+				</md-input-container>
+			</md-content>
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<md-button ng-click="answer(false)" >
+					Cancelar
+			</md-button>
+			<md-button ng-click="answer(true)" style="margin-right:20px;" >
+					Guardar
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

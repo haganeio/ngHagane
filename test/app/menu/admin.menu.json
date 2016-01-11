@@ -1,0 +1,10 @@
+[
+  { "name": "Inicio", "route" : "admin", "icon": null},
+  { "name": "Gestion de usuarios", "route" : "admin/usuarios", "icon": null},
+  { "name": "Clientes", "route" : "admin/clientes", "icon": null, "type": "link"},
+  { "name": "Reporte de Clientes", "route" : "admin/reporte", "icon": null},
+  { "type": "devider"},
+  { "name": "Logout", "route" : "auth/logout", "icon": null},
+  { "type": "devider"},
+  { "name": "Logout", "route" : "auth/logout", "icon": null}
+]

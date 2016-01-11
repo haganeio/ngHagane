@@ -1,0 +1,50 @@
+<md-content layout="row" flex id="sidebar">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-primary">
+      <h1 class="md-toolbar-tools">ngHagane</h1>
+    </md-toolbar>
+    <md-content layout-padding ng-controller="LeftCtrl" layout="column">
+      <div ng-if="isLogged">
+        <img class="img-sidebar" ng-src="user.photo">
+        <p>Bienvenido {{user.title}} {{user.name}}</p>
+      </div>
+      <hg-menu items="menuItems"></hg-menu>
+    </md-content>
+  </md-sidenav>
+  <md-content layout="column" flex id="mainPanel">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-button ng-click="toggleLeft()" hide-gt-md class="md-icon-button">
+          <md-icon md-font-set="material-icons">menu</md-icon>
+        </md-button>
+        <h2>{{toolbar_title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Contextual" ng-click="toggleRight()" ng-hide="isOpenRight()">
+          <md-icon md-font-set="material-icons">more_vert</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content flex style="padding: 15px;">
+      <div class="loader">
+        <md-progress-circular md-mode="{{loading}}"></md-progress-circular>
+      </div>
+      <ng-view></ng-view>
+    </md-content>
+  </md-content>
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-toolbar class="md-theme-light">
+      <h1 class="md-toolbar-tools">Menu contextual</h1>
+    </md-toolbar>
+    <md-content ng-controller="RightCtrl" layout-padding>
+      <form>
+        <md-input-container>
+          <label for="testInput">Test input</label>
+          <input type="text" id="testInput" ng-model="data" md-autofocus>
+        </md-input-container>
+      </form>
+      <md-button ng-click="close()" class="md-primary">
+        Close Sidenav Right
+      </md-button>
+    </md-content>
+  </md-sidenav>
+</md-content>

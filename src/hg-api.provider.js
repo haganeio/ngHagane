@@ -9,20 +9,27 @@ ngHagane.constant('MODULE_VERSION', '0.0.1');
 // });
 
 ngHagane.provider('hgApi', function () {
-	this.server;
-	this.appToken;
-	this.accessToken;
+	settings.server;
+	settings.appToken;
+	settings.accessToken;
 
 	this.setServer = function (server) {
-		this.server = server;
+		settings.server = server;
+	}
+
+	this.setAppToken = function (appToken) {
+		settings.appToken = appToken;
 	}
 
 	this.$get = function () {
 		var self = this;
 		return {
 			getServer: function () {
-				return self.server;
+				return settings.server;
 			},
+			getAppToken: function () {
+				return settings.appToken;
+			}
 		}
 	};
 });

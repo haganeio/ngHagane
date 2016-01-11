@@ -1,0 +1,53 @@
+<section id="pagecontent" layout="row" flex ng-controller="AdminUserCtlr">
+<div ng-cloak class="slider">
+	<md-content>
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Usuarios Responsables">
+				<md-content class="md-padding">
+					<md-list>
+						<md-list-item class="md-3-line" ng-repeat="usuarioResponsable in usuariosResponsable">
+							<div class="md-list-item-text" layout="column">
+								<h3>{{ usuarioResponsable.nombre }} {{ usuarioResponsable.apellido_paterno }} {{ usuarioResponsable.apellido_materno }}</h3>
+								<h4>{{ usuarioResponsable.empresa }}</h4>
+								<p>info</p>
+							</div>
+							<md-button class="md-secondary" ng-click="modPymeDialog($event, $index)">Modificar</md-button>
+							<md-divider ></md-divider>
+						</md-list-item>
+					</md-list>
+				</md-content>
+			</md-tab>
+			<md-tab label="Usuarios Doctores">
+				<md-content class="md-padding">
+					<md-list>
+						<md-list-item class="md-3-line" ng-repeat="usuarioDoctor in usuariosDoctor">
+							<div class="md-list-item-text" layout="column">
+								<h3>{{ usuarioDoctor.nombre }} {{ usuarioDoctor.apellido_paterno }} {{ usuarioDoctor.apellido_materno }}</h3>
+								<h4>Cédula: {{ usuarioDoctor.cedula }}</h4>
+								<p>info</p>
+							</div>
+							<md-button class="md-secondary" ng-click="modDoctorDialog($event, $index)">Modificar</md-button>
+							<md-divider ></md-divider>
+						</md-list-item>
+					</md-list>
+				</md-content>
+			</md-tab>
+			<md-tab label="Usuarios Administradores">
+				<md-content class="md-padding">
+							<md-list>
+								<md-list-item class="md-3-line" ng-repeat="usuarioAdmin in usuariosAdmin">
+									<div class="md-list-item-text" layout="column">
+										<h3>{{ usuarioAdmin.nombre }} {{ usuarioAdmin.apellido_paterno }} {{ usuarioAdmin.apellido_materno }}</h3>
+										<h4>SISSE</h4>
+										<p>info</p>
+									</div>
+									<md-button class="md-secondary" ng-click="modAdminDialog($event, $index)">Modificar</md-button>
+									<md-divider ></md-divider>
+								</md-list-item>
+							</md-list>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</md-content>
+</div>
+</section>
