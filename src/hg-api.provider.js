@@ -18,7 +18,7 @@ ngHagane.provider('hgApi', function () {
 		settings.appToken = appToken;
 	}
 
-	this.$get = ['$http', function ($http) {
+	this.$get = ['$http', '$cookies', function ($http, $cookies) {
 		$hagane = {};
 		$hagane.session = {};
 

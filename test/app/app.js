@@ -1,1 +1,1 @@
-var app = angular.module('hgapp', ['ngHagane', 'ngRoute', 'ngMaterial']);
+var app = angular.module('hgapp', ['ngHagane', 'ngRoute', 'ngMaterial', 'ngCookies']);

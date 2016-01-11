@@ -48,8 +48,8 @@ ngHagane.provider('hgApi', function () {
 			.then(function (res) {
 				if (res.data.success) {
 					var user = res.data.message.user;
-					session.create(res.data.id, res.data.user.id, res.data.user.role);
-					return res.data.user;
+					session.create(user.id, user.user.id, user.user.role);
+					return user;
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
