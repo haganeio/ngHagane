@@ -18,7 +18,7 @@ ngHagane.provider('hgApi', function () {
 		settings.appToken = appToken;
 	}
 
-	this.$get = [function () {
+	this.$get = ['$http', function ($http) {
 		$hagane = {};
 		$hagane.session = {};
 
@@ -46,11 +46,12 @@ ngHagane.provider('hgApi', function () {
 			return $http
 			.post(settings.host + '/login', credentials)
 			.then(function (res) {
-				if (res.success) {
-					session.create(res.data.id, res.data.user.id, res.data.user.role);
-					return res.data.user;
-				} else if (res.error) {
-					return res.error;
+				if (res.data.success) {
+					var user = res.data.message.user;
+					session.create(user.id, user.user.id, user.user.role);
+					return user;
+				} else if (res.data.error) {
+					return res.data.error;
 				} else {
 					throw 'login failed';
 				}
