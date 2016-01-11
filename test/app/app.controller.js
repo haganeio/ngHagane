@@ -2,7 +2,7 @@ app.controller('AppCtlr', function($scope, $timeout, $mdSidenav, $log, $location
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
 
-    $scope.server = hgApi.getServer();
+    $scope.server = hgApi.getHost();
 
     $scope.isOpenRight = function() {
       return $mdSidenav('right').isOpen();

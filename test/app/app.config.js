@@ -6,5 +6,5 @@ app.config(function($mdThemingProvider, $mdIconProvider, hgApiProvider) {
 	.accentPalette('deep-orange');
 
 	//Hagane API config
-	hgApiProvider.setServer('http://sisse.hagane.io');
+	hgApiProvider.setHost('http://sisse.hagane.io');
 });

@@ -1,78 +1,97 @@
 // 1. define the module and the other module dependencies (if any)
 var ngHagane = angular.module('ngHagane', []);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
-// ngHagane.factory('factoryName', function() {/* stuff here */});
-// ngHagane.directive('directiveName', function() {/* stuff here */});
-
-// angular.module('ngHagane').controller('main', function() {
-// 	/* more stuff here */
-// });
 
 ngHagane.provider('hgApi', function () {
-	this.server;
-	this.appToken;
-	this.accessToken;
+	settings = {};
+	session = {};
 
-	this.setServer = function (server) {
-		this.server = server;
+	settings.host;
+	settings.appToken;
+	settings.accessToken;
+
+	this.setHost = function (host) {
+		settings.host = host;
 	}
 
-	this.$get = function () {
-		var self = this;
-		return {
-			getServer: function () {
-				return self.server;
-			},
+	this.setAppToken = function (appToken) {
+		settings.appToken = appToken;
+	}
+
+	this.$get = [function () {
+		$hagane = {};
+		$hagane.session = {};
+
+		$hagane.getHost = function () {
+			return settings.host;
 		}
-	};
+
+		$hagane.getAppToken = function () {
+			return settings.appToken;
+		}
+
+		$hagane.session.create = function (sessionId, userId, userRole) {
+			session.id = sessionId;
+			session.userId = userId;
+			session.userRole = userRole;
+		};
+
+		$hagane.session.destroy = function () {
+			session.id = null;
+			session.userId = null;
+			session.userRole = null;
+		};
+
+		$hagane.login = function (credentials) {
+			return $http
+			.post(settings.host + '/login', credentials)
+			.then(function (res) {
+				if (res.success) {
+					session.create(res.data.id, res.data.user.id, res.data.user.role);
+					return res.data.user;
+				} else if (res.error) {
+					return res.error;
+				} else {
+					throw 'login failed';
+				}
+
+			});
+		}
+
+		$hagane.isAuthenticated = function () {
+			return !!session.userId;
+		};
+
+		$hagane.isAuthorized = function (authorizedRoles) {
+			if (!angular.isArray(authorizedRoles)) {
+				authorizedRoles = [authorizedRoles];
+			}
+			return ($hagane.isAuthenticated() &&
+				authorizedRoles.indexOf(session.userRole) !== -1);
+		};
+
+		return $hagane;
+	}];
 });
 
+
 ngHagane.constant('HG_AUTH_EVENTS', {
-  LOGIN_SUCCESS: 'auth-login-success',
-  LOGIN_FAILED: 'auth-login-failed',
-  LOGOUT_SUCCESS: 'auth-logout-success',
-  SESSION_TIMEOUT: 'auth-session-timeout',
-  NOT_AUTHENTICATED: 'auth-not-authenticated',
-  NOT_AUTHORIZED: 'auth-not-authorized'
+	LOGIN_SUCCESS: 'auth-login-success',
+	LOGIN_FAILED: 'auth-login-failed',
+	LOGOUT_SUCCESS: 'auth-logout-success',
+	SESSION_TIMEOUT: 'auth-session-timeout',
+	NOT_AUTHENTICATED: 'auth-not-authenticated',
+	NOT_AUTHORIZED: 'auth-not-authorized'
 });
 
 ngHagane.factory('hgAuth', function(hgSession, hgApi) {
-  var authService = {};
+	var authService = {};
 
-  authService.login = function (credentials) {
-    return $http
-      .post('/login', credentials)
-      .then(function (res) {
-        Session.create(res.data.id, res.data.user.id,
-                       res.data.user.role);
-        return res.data.user;
-      });
-  };
 
-  authService.isAuthenticated = function () {
-    return !!Session.userId;
-  };
 
-  authService.isAuthorized = function (authorizedRoles) {
-    if (!angular.isArray(authorizedRoles)) {
-      authorizedRoles = [authorizedRoles];
-    }
-    return (authService.isAuthenticated() &&
-      authorizedRoles.indexOf(Session.userRole) !== -1);
-  };
-
-  return authService;
+	return authService;
 });
 
 ngHagane.service('hgSession', function () {
-  this.create = function (sessionId, userId, userRole) {
-    this.id = sessionId;
-    this.userId = userId;
-    this.userRole = userRole;
-  };
-  this.destroy = function () {
-    this.id = null;
-    this.userId = null;
-    this.userRole = null;
-  };
+
 });
