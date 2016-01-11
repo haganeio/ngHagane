@@ -21,15 +21,16 @@ ngHagane.provider('hgApi', function () {
 		settings.appToken = appToken;
 	}
 
-	this.$get = function () {
-		var self = this;
-		return {
-			getServer: function () {
-				return settings.server;
-			},
-			getAppToken: function () {
-				return settings.appToken;
-			}
+	this.$get = [function () {
+		$hagane = {};
+
+		$hagane.getServer: function () {
+			return settings.server;
 		}
-	};
+
+		$hagane.getAppToken: function () {
+			return settings.appToken;
+		}
+		return $hagane;
+	}];
 });
