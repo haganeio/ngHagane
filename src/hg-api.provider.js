@@ -102,37 +102,45 @@ ngHagane.provider('$hagane', function () {
 		};
 
 		$hagane.api.put = function (path, data) {
-			if (session.accessToken) {
-				data.accessToken = session.accessToken;
-			}
-			return $http
-			.put(settings.host + path, data)
-			.then(function (res) {
-				if (res.data.success) {
-					return res.data.message;
-				} else if (res.data.error) {
-					return res.data.error;
-				} else {
-					throw 'hagane post failed';
+			if (data) {
+				if (session.accessToken) {
+					data.accessToken = session.accessToken;
 				}
-			});
+				return $http
+				.put(settings.host + path, data)
+				.then(function (res) {
+					if (res.data.success) {
+						return res.data.message;
+					} else if (res.data.error) {
+						return res.data.error;
+					} else {
+						throw 'hagane post failed';
+					}
+				});
+			} else {
+				throw 'hagane post no data';
+			}
 		};
 
 		$hagane.api.delete = function (path, data) {
-			if (session.accessToken) {
-				data.accessToken = session.accessToken;
-			}
-			return $http
-			.delete(settings.host + path, data)
-			.then(function (res) {
-				if (res.data.success) {
-					return res.data.message;
-				} else if (res.data.error) {
-					return res.data.error;
-				} else {
-					throw 'hagane post failed';
+			if (data) {
+				if (session.accessToken) {
+					data.accessToken = session.accessToken;
 				}
-			});
+				return $http
+				.delete(settings.host + path, data)
+				.then(function (res) {
+					if (res.data.success) {
+						return res.data.message;
+					} else if (res.data.error) {
+						return res.data.error;
+					} else {
+						throw 'hagane post failed';
+					}
+				});
+			} else {
+				throw 'hagane post no data';
+			}
 		};
 
 		$hagane.isAuthenticated = function () {
