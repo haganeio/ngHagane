@@ -2,7 +2,7 @@
 var ngHagane = angular.module('ngHagane', []);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
 
-ngHagane.provider('$hagane', function () {
+ngHagane.provider('hagane', function () {
 	settings = {};
 	session = {};
 
@@ -19,33 +19,33 @@ ngHagane.provider('$hagane', function () {
 	}
 
 	this.$get = ['$http', '$cookies', '$q', function ($http, $cookies, $q) {
-		$hagane = {};
-		$hagane.session = {};
-		$hagane.api = {};
+		hagane = {};
+		hagane.session = {};
+		hagane.api = {};
 
-		$hagane.getHost = function () {
+		hagane.getHost = function () {
 			return settings.host;
 		}
 
-		$hagane.getAppToken = function () {
+		hagane.getAppToken = function () {
 			return settings.appToken;
 		}
 
-		$hagane.session.create = function (accessToken, userId, userRole) {
+		hagane.session.create = function (accessToken, userId, userRole) {
 			$cookies.put('hgsession', accessToken);
 			session.accessToken = accessToken;
 			session.userId = userId;
 			session.userRole = userRole;
 		};
 
-		$hagane.session.destroy = function () {
+		hagane.session.destroy = function () {
 			$cookies.put('hgsession', '');
 			session.accessToken = null;
 			session.userId = null;
 			session.userRole = null;
 		};
 
-		$hagane.login = function (credentials) {
+		hagane.login = function (credentials) {
 			var defer = $q.defer();
 
 			return $http
@@ -53,7 +53,7 @@ ngHagane.provider('$hagane', function () {
 			.then(function (res) {
 				if (res.data.success) {
 					var user = res.data.message.user;
-					$hagane.session.create(user.accessToken, user.id, user.role);
+					hagane.session.create(user.accessToken, user.id, user.role);
 
 					defer.resolve(res.data.message);
 				} else if (res.data.error) {
@@ -65,7 +65,7 @@ ngHagane.provider('$hagane', function () {
 			});
 		}
 
-		$hagane.api.get = function (path) {
+		hagane.api.get = function (path) {
 			var defer = $q.defer();
 
 			var token = '';
@@ -86,7 +86,7 @@ ngHagane.provider('$hagane', function () {
 			});
 		};
 
-		$hagane.api.post = function (path, data) {
+		hagane.api.post = function (path, data) {
 			var defer = $q.defer();
 
 			if (data) {
@@ -110,7 +110,7 @@ ngHagane.provider('$hagane', function () {
 			}
 		};
 
-		$hagane.api.put = function (path, data) {
+		hagane.api.put = function (path, data) {
 			var defer = $q.defer();
 
 			if (data) {
@@ -134,7 +134,7 @@ ngHagane.provider('$hagane', function () {
 			}
 		};
 
-		$hagane.api.delete = function (path, data) {
+		hagane.api.delete = function (path, data) {
 			var defer = $q.defer();
 
 			if (data) {
@@ -158,19 +158,18 @@ ngHagane.provider('$hagane', function () {
 			}
 		};
 
-		$hagane.isAuthenticated = function () {
+		hagane.isAuthenticated = function () {
 			return !!session.userId;
 		};
 
-		// $hagane.isAuthorized = function (authorizedRoles) {
+		// hagane.isAuthorized = function (authorizedRoles) {
 		// 	if (!angular.isArray(authorizedRoles)) {
 		// 		authorizedRoles = [authorizedRoles];
 		// 	}
-		// 	return ($hagane.isAuthenticated() &&
+		// 	return (hagane.isAuthenticated() &&
 		// 		authorizedRoles.indexOf(session.userRole) !== -1);
 		// };
 
-		return $hagane;
+		return hagane;
 	}];
 });
-
