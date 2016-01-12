@@ -18,7 +18,7 @@ ngHagane.provider('$hagane', function () {
 		settings.appToken = appToken;
 	}
 
-	this.$get = ['$http', '$cookies', function ($http, $cookies) {
+	this.$get = ['$http', '$cookies', '$q', function ($http, $cookies, $q) {
 		$hagane = {};
 		$hagane.session = {};
 		$hagane.api = {};
@@ -46,6 +46,8 @@ ngHagane.provider('$hagane', function () {
 		};
 
 		$hagane.login = function (credentials) {
+			var defer = $q.defer();
+
 			return $http
 			.post(settings.host + '/User/login', credentials)
 			.then(function (res) {
@@ -53,16 +55,19 @@ ngHagane.provider('$hagane', function () {
 					var user = res.data.message.user;
 					$hagane.session.create(user.accessToken, user.id, user.role);
 
-					return res.data.message;
+					defer.resolve(res.data.message);
 				} else if (res.data.error) {
-					return res.data.error;
+					defer.reject(res.data.error);
 				} else {
 					throw 'login failed';
 				}
+				return defer.promise;
 			});
 		}
 
 		$hagane.api.get = function (path) {
+			var defer = $q.defer();
+
 			var token = '';
 			if (session.accessToken) {
 				token = '/'+session.accessToken;
@@ -71,16 +76,19 @@ ngHagane.provider('$hagane', function () {
 			.get(settings.host + path + token)
 			.then(function (res) {
 				if (res.data.success) {
-					return res.data.message;
+					defer.resolve(res.data.message);
 				} else if (res.data.error) {
-					return res.data.error;
+					defer.reject(res.data.error);
 				} else {
 					throw 'hagane get failed';
 				}
+				return defer.promise;
 			});
 		};
 
 		$hagane.api.post = function (path, data) {
+			var defer = $q.defer();
+
 			if (data) {
 				if (session.accessToken) {
 					data.accessToken = session.accessToken;
@@ -89,12 +97,13 @@ ngHagane.provider('$hagane', function () {
 				.post(settings.host + path, data)
 				.then(function (res) {
 					if (res.data.success) {
-						return res.data.message;
+						defer.resolve(res.data.message);
 					} else if (res.data.error) {
-						return res.data.error;
+						defer.reject(res.data.error);
 					} else {
 						throw 'hagane post failed';
 					}
+					return defer.promise;
 				});
 			} else {
 				throw 'hagane post no data';
@@ -102,6 +111,8 @@ ngHagane.provider('$hagane', function () {
 		};
 
 		$hagane.api.put = function (path, data) {
+			var defer = $q.defer();
+
 			if (data) {
 				if (session.accessToken) {
 					data.accessToken = session.accessToken;
@@ -110,19 +121,22 @@ ngHagane.provider('$hagane', function () {
 				.put(settings.host + path, data)
 				.then(function (res) {
 					if (res.data.success) {
-						return res.data.message;
+						defer.resolve(res.data.message);
 					} else if (res.data.error) {
-						return res.data.error;
+						defer.reject(res.data.error);
 					} else {
 						throw 'hagane post failed';
 					}
+					return defer.promise;
 				});
 			} else {
-				throw 'hagane post no data';
+				throw 'hagane put no data';
 			}
 		};
 
 		$hagane.api.delete = function (path, data) {
+			var defer = $q.defer();
+
 			if (data) {
 				if (session.accessToken) {
 					data.accessToken = session.accessToken;
@@ -131,15 +145,16 @@ ngHagane.provider('$hagane', function () {
 				.delete(settings.host + path, data)
 				.then(function (res) {
 					if (res.data.success) {
-						return res.data.message;
+						defer.resolve(res.data.message);
 					} else if (res.data.error) {
-						return res.data.error;
+						defer.reject(res.data.error);
 					} else {
 						throw 'hagane post failed';
 					}
+					return defer.promise;
 				});
 			} else {
-				throw 'hagane post no data';
+				throw 'hagane delete no data';
 			}
 		};
 

@@ -7,6 +7,8 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 		$hagane.api.post('/Index/prueba/'+mensaje, {hola: 'hola'})
 		.then(function (res) {
 			$scope.returning = res;
+		}, function (res) {
+			$scope.returning = 'ERROR MOTHAFOKA>> ' + JSON.stringify(res);
 		});
 	};
 
@@ -14,7 +16,10 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 		$hagane.api.get('/Index/prueba/'+mensaje)
 		.then(function (res) {
 			$scope.returning = res;
-		});
+		}, function (res) {
+			$scope.returning = 'ERROR MOTHAFOKA>> ' + JSON.stringify(res);
+		}
+		);
 	};
 
 	$scope.login = function () {
@@ -23,7 +28,8 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 			$scope.returning = res;
 			$rootScope.$broadcast(HG_AUTH_EVENTS.loginSuccess);
 			//$scope.setCurrentUser(user);
-		}, function () {
+		}, function (res) {
+			$scope.returning = 'ERROR MOTHAFOKA>> ' + JSON.stringify(res);
 			$rootScope.$broadcast(HG_AUTH_EVENTS.loginFailed);
 		});
 	};
