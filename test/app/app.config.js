@@ -7,5 +7,5 @@ app.config(function($mdThemingProvider, $mdIconProvider, haganeProvider) {
 
 	//Hagane API config
 	//$httpProvider.defaults.withCredentials = true;
-	haganeProvider.setHost('http://sisse.hagane.io');
+	haganeProvider.setHost('http://basket.hagane.io');
 });

@@ -14,6 +14,30 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, hagane)
 		});
 	};
 
+	$scope.apiput = function () {
+		var carrito = {
+			nombre: 'nombre',
+			apaterno: 'apaterno',
+			amaterno: 'amaterno',
+			email: 'email',
+			telefono: 'telefono',
+			celular: 'celular',
+			calle: 'calle',
+			cp: 'cp',
+			numint: 'numint',
+			numext: 'numext',
+			colonia: 'colonia',
+			municipio: 'municipio',
+			carrito: 'carrito'
+		};
+		hagane.api.put('/Carritos', carrito)
+		.then(function (res) {
+			$scope.returning = res;
+		}, function (res) {
+			$scope.returning = 'ERROR MOTHAFOKA>> ' + JSON.stringify(res);
+		});
+	};
+
 	$scope.logout = function () {
 		hagane.session.destroy();
 	};
