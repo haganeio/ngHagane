@@ -1,14 +1,23 @@
-// 1. define the module and the other module dependencies (if any)
 var ngHagane = angular.module('ngHagane', []);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
 
-ngHagane.provider('$hagane', function () {
+ngHagane.provider('$hagane', [function () {
 	settings = {};
 	session = {};
+	session.user = {};
 
 	settings.host;
 	settings.appToken;
-	settings.accessToken;
+
+	//retieve cookies
+	var $cookies;
+	angular.injector(['ngCookies']).invoke(['$cookies', function(_$cookies_) {
+		$cookies = _$cookies_;
+	}]);
+	var token = $cookies.get('hgsession');
+	if (token) {
+		session.user.accessToken = token;
+	}
 
 	this.setHost = function (host) {
 		settings.host = host;
@@ -31,18 +40,22 @@ ngHagane.provider('$hagane', function () {
 			return settings.appToken;
 		}
 
+		$hagane.getAccessToken = function () {
+			return session.user.accessToken;
+		}
+
 		$hagane.session.create = function (accessToken, userId, userRole) {
 			$cookies.put('hgsession', accessToken);
-			session.accessToken = accessToken;
-			session.userId = userId;
-			session.userRole = userRole;
+			session.user.accessToken = accessToken;
+			session.user.id = userId;
+			session.user.role = userRole;
 		};
 
 		$hagane.session.destroy = function () {
 			$cookies.put('hgsession', '');
-			session.accessToken = null;
-			session.userId = null;
-			session.userRole = null;
+			session.user.accessToken = null;
+			session.user.id = null;
+			session.user.role = null;
 		};
 
 		$hagane.login = function (credentials) {
@@ -172,9 +185,7 @@ ngHagane.provider('$hagane', function () {
 
 		return $hagane;
 	}];
-});
-
-
+}]);
 ngHagane.constant('HG_AUTH_EVENTS', {
 	LOGIN_SUCCESS: 'auth-login-success',
 	LOGIN_FAILED: 'auth-login-failed',
