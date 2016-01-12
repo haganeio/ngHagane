@@ -1,3 +1,0 @@
-ngHagane.service('hgSession', function () {
-
-});

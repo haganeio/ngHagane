@@ -1,8 +1,8 @@
-app.controller('AppCtlr', function($scope, $timeout, $mdSidenav, $log, $location, hgApi) {
+app.controller('AppCtlr', function($scope, $timeout, $mdSidenav, $log, $location, $hagane) {
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
 
-    $scope.server = hgApi.getHost();
+    $scope.server = $hagane.getHost();
 
     $scope.isOpenRight = function() {
       return $mdSidenav('right').isOpen();
@@ -78,7 +78,7 @@ app.controller('AppCtlr', function($scope, $timeout, $mdSidenav, $log, $location
         });
     };
   }])
-  .controller('RightCtrl', function($scope, $timeout, $mdSidenav, $log, hgAuth) {
+  .controller('RightCtrl', function($scope, $timeout, $mdSidenav, $log) {
     $scope.menuItems;
 
     $scope.close = function() {

@@ -2,7 +2,7 @@
 var ngHagane = angular.module('ngHagane', []);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
 
-ngHagane.provider('hgApi', function () {
+ngHagane.provider('$hagane', function () {
 	settings = {};
 	session = {};
 
@@ -21,6 +21,7 @@ ngHagane.provider('hgApi', function () {
 	this.$get = ['$http', '$cookies', function ($http, $cookies) {
 		$hagane = {};
 		$hagane.session = {};
+		$hagane.api = {};
 
 		$hagane.getHost = function () {
 			return settings.host;
@@ -30,14 +31,16 @@ ngHagane.provider('hgApi', function () {
 			return settings.appToken;
 		}
 
-		$hagane.session.create = function (sessionId, userId, userRole) {
-			session.id = sessionId;
+		$hagane.session.create = function (accessToken, userId, userRole) {
+			$cookies.put('hgsession', accessToken);
+			session.accessToken = accessToken;
 			session.userId = userId;
 			session.userRole = userRole;
 		};
 
 		$hagane.session.destroy = function () {
-			session.id = null;
+			$cookies.put('hgsession', '');
+			session.accessToken = null;
 			session.userId = null;
 			session.userRole = null;
 		};
@@ -48,28 +51,55 @@ ngHagane.provider('hgApi', function () {
 			.then(function (res) {
 				if (res.data.success) {
 					var user = res.data.message.user;
-					session.create(user.id, user.user.id, user.user.role);
+					session.create(user.accessToken, user.id, user.role);
 					return user;
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
 					throw 'login failed';
 				}
-
 			});
 		}
+
+		$hagane.api.post = function (path, data) {
+			return $http
+			.post(settings.host + path, data)
+			.then(function (res) {
+				if (res.data.success) {
+					return res.data.message;
+				} else if (res.data.error) {
+					return res.data.error;
+				} else {
+					throw 'request failed';
+				}
+			});
+		};
+
+		$hagane.api.get = function (path) {
+			return $http
+			.get(settings.host + path)
+			.then(function (res) {
+				if (res.data.success) {
+					return res.data.message;
+				} else if (res.data.error) {
+					return res.data.error;
+				} else {
+					throw 'request failed';
+				}
+			});
+		};
 
 		$hagane.isAuthenticated = function () {
 			return !!session.userId;
 		};
 
-		$hagane.isAuthorized = function (authorizedRoles) {
-			if (!angular.isArray(authorizedRoles)) {
-				authorizedRoles = [authorizedRoles];
-			}
-			return ($hagane.isAuthenticated() &&
-				authorizedRoles.indexOf(session.userRole) !== -1);
-		};
+		// $hagane.isAuthorized = function (authorizedRoles) {
+		// 	if (!angular.isArray(authorizedRoles)) {
+		// 		authorizedRoles = [authorizedRoles];
+		// 	}
+		// 	return ($hagane.isAuthenticated() &&
+		// 		authorizedRoles.indexOf(session.userRole) !== -1);
+		// };
 
 		return $hagane;
 	}];
