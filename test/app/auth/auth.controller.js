@@ -4,7 +4,7 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 	$scope.returning = '';
 
 	$scope.apipost = function (mensaje) {
-		$hagane.api.post('/Index/prueba/'+mensaje)
+		$hagane.api.post('/Index/prueba/'+mensaje, {hola: 'hola'})
 		.then(function (res) {
 			$scope.returning = res;
 		});
