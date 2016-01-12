@@ -1,4 +1,4 @@
-app.config(function($mdThemingProvider, $mdIconProvider, $haganeProvider) {
+app.config(function($mdThemingProvider, $mdIconProvider, haganeProvider) {
 	$mdThemingProvider.theme('default')
 	.primaryPalette('orange', {
 		'default': '900'
@@ -7,5 +7,5 @@ app.config(function($mdThemingProvider, $mdIconProvider, $haganeProvider) {
 
 	//Hagane API config
 	//$httpProvider.defaults.withCredentials = true;
-	$haganeProvider.setHost('http://sisse.hagane.io');
+	haganeProvider.setHost('http://sisse.hagane.io');
 });

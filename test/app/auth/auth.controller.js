@@ -1,12 +1,12 @@
-app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane) {
+app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, hagane) {
 	$scope.credentials = {};
 	$scope.mensaje = 'men';
 	$scope.returning = '';
 
-	$scope.token = $hagane.getAccessToken();
+	$scope.token = hagane.getAccessToken();
 
 	$scope.apipost = function (mensaje) {
-		$hagane.api.post('/Index/prueba/'+mensaje, {hola: 'hola'})
+		hagane.api.post('/Index/prueba/'+mensaje, {hola: 'hola'})
 		.then(function (res) {
 			$scope.returning = res;
 		}, function (res) {
@@ -15,11 +15,11 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 	};
 
 	$scope.logout = function () {
-		$hagane.session.destroy();
+		hagane.session.destroy();
 	};
 
 	$scope.apiget = function (mensaje) {
-		$hagane.api.get('/Index/prueba/'+mensaje)
+		hagane.api.get('/Index/prueba/'+mensaje)
 		.then(function (res) {
 			$scope.returning = res;
 		}, function (res) {
@@ -29,7 +29,7 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 	};
 
 	$scope.login = function () {
-		$hagane.login($scope.credentials)
+		hagane.login($scope.credentials)
 		.then(function (res) {
 			$scope.returning = res;
 			$rootScope.$broadcast(HG_AUTH_EVENTS.loginSuccess);

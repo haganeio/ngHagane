@@ -40,7 +40,7 @@ ngHagane.provider('hagane', function () {
 			return settings.appToken;
 		}
 
-		$hagane.getAccessToken = function () {
+		hagane.getAccessToken = function () {
 			return session.user.accessToken;
 		}
 
