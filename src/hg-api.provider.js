@@ -70,7 +70,7 @@ ngHagane.provider('$hagane', function () {
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
-					throw 'request failed';
+					throw 'hagane post failed';
 				}
 			});
 		};
@@ -84,7 +84,7 @@ ngHagane.provider('$hagane', function () {
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
-					throw 'request failed';
+					throw 'hagane get failed';
 				}
 			});
 		};
