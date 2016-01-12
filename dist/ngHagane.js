@@ -47,12 +47,13 @@ ngHagane.provider('$hagane', function () {
 
 		$hagane.login = function (credentials) {
 			return $http
-			.post(settings.host + '/login', credentials)
+			.post(settings.host + '/User/login', credentials)
 			.then(function (res) {
 				if (res.data.success) {
 					var user = res.data.message.user;
-					session.create(user.accessToken, user.id, user.role);
-					return user;
+					$hagane.session.create(user.accessToken, user.id, user.role);
+
+					return res.data.message;
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
@@ -61,7 +62,28 @@ ngHagane.provider('$hagane', function () {
 			});
 		}
 
+		$hagane.api.get = function (path) {
+			var token = '';
+			if (session.accessToken) {
+				token = '/'+session.accessToken;
+			}
+			return $http
+			.get(settings.host + path + token)
+			.then(function (res) {
+				if (res.data.success) {
+					return res.data.message;
+				} else if (res.data.error) {
+					return res.data.error;
+				} else {
+					throw 'hagane get failed';
+				}
+			});
+		};
+
 		$hagane.api.post = function (path, data) {
+			if (session.accessToken) {
+				data.accessToken = session.accessToken;
+			}
 			return $http
 			.post(settings.host + path, data)
 			.then(function (res) {
@@ -70,21 +92,41 @@ ngHagane.provider('$hagane', function () {
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
-					throw 'request failed';
+					throw 'hagane post failed';
 				}
 			});
 		};
 
-		$hagane.api.get = function (path) {
+		$hagane.api.put = function (path, data) {
+			if (session.accessToken) {
+				data.accessToken = session.accessToken;
+			}
 			return $http
-			.get(settings.host + path)
+			.put(settings.host + path, data)
 			.then(function (res) {
 				if (res.data.success) {
 					return res.data.message;
 				} else if (res.data.error) {
 					return res.data.error;
 				} else {
-					throw 'request failed';
+					throw 'hagane post failed';
+				}
+			});
+		};
+
+		$hagane.api.delete = function (path, data) {
+			if (session.accessToken) {
+				data.accessToken = session.accessToken;
+			}
+			return $http
+			.delete(settings.host + path, data)
+			.then(function (res) {
+				if (res.data.success) {
+					return res.data.message;
+				} else if (res.data.error) {
+					return res.data.error;
+				} else {
+					throw 'hagane post failed';
 				}
 			});
 		};

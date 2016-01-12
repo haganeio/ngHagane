@@ -3,8 +3,15 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 	$scope.mensaje = 'men';
 	$scope.returning = '';
 
-	$scope.api = function (mensaje) {
+	$scope.apipost = function (mensaje) {
 		$hagane.api.post('/Index/prueba/'+mensaje)
+		.then(function (res) {
+			$scope.returning = res;
+		});
+	};
+
+	$scope.apiget = function (mensaje) {
+		$hagane.api.get('/Index/prueba/'+mensaje)
 		.then(function (res) {
 			$scope.returning = res;
 		});
@@ -12,7 +19,8 @@ app.controller('AuthCtlr', function ($scope, $rootScope, HG_AUTH_EVENTS, $hagane
 
 	$scope.login = function () {
 		$hagane.login($scope.credentials)
-		.then(function (user) {
+		.then(function (res) {
+			$scope.returning = res;
 			$rootScope.$broadcast(HG_AUTH_EVENTS.loginSuccess);
 			//$scope.setCurrentUser(user);
 		}, function () {
