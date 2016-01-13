@@ -1,4 +1,4 @@
-<section id="pagecontent" layout="row" flex ng-controller="AdminMainCtlr">
+<section id="pagecontent" layout="row" flex>
 	<md-card style="min-width: 600px;">
         <md-card-title>
           <md-card-title-text>
@@ -11,10 +11,11 @@
 				<md-divider ></md-divider>
 				<md-list-item ng-repeat="carrito in carritos" class="md-3-line" ng-repeat="item in todos">
 					<div class="md-list-item-text" layout="column">
-						<h3>{{ carrito.nombre }}</h3>
-						<h4>{{ carrito.calle }}</h4>
-						<p>{{ carrito.colonia }}</p>
+						<h3>{{ carrito.nombre }} {{ carrito.apaterno }} {{ carrito.amaterno }}</h3>
+						<h4>{{ carrito.colonia }}, {{ carrito.municipio }}</h4>
+						<p>{{ carrito.calle }}, No.{{ carrito.numext }} - No. Int.{{ carrito.numint }} </p>
 					</div>
+					<md-button class="md-secondary" ng-click="carritoDialog($event, $index)">Ver</md-button>
 					<md-divider ></md-divider>
 				</md-list-item>
 			</md-list>
