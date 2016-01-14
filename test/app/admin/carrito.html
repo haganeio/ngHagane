@@ -1,0 +1,68 @@
+<md-dialog aria-label="Carrito"  ng-cloak>
+<form>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Carrito</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon aria-label="Close dialog">close</md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content style="width:960px;height:810px; ">
+		<div class="md-dialog-content">
+				<h3>{{ carrito.nombre }} {{ carrito.apaterno }} {{ carrito.amaterno }}</h3>
+				<h4>{{ carrito.colonia }}, {{ carrito.municipio }}</h4>
+				<h5>{{ carrito.calle }}, No.{{ carrito.numext }} - No. Int.{{ carrito.numint }} </h5>
+				<p>tel.{{ carrito.telefono }}, cel.{{ carrito.celular }}</p>
+				<p>Comentarios: {{ carrito.comentarios }}</p>
+				<fieldset>
+					<legend>Carrito</legend>
+					<div layout-align="center center" class="panelModal" ng-show="cart.length">
+				 		<div layout="row" class="smallGutter-bot" layout-align="start start" ng-repeat="entry in cart" ng-init="">
+				 			<div flex="20">
+								<img ng-src="{{cartDetails[$index].imagenCanasta}}" alt="imgcanasta" style="width: 150px; height: 75px;" class="canastaImg">
+				 			</div>
+							<div flex="40" flex-offset="5" layout-align="start start">
+								<p class="t02 darkGreen-text toUpper no-margin">{{cartDetails[$index].nombre}}</p>
+								<p class="t03 darkGreen-text toUpper no-margin">{{cartDetails[$index].categoria}}</p>
+							</div>
+							<div flex="15" layout-align="none start">
+								<p ng-bind="entry.cuantity"></p>
+							</div>
+							<div flex="15" flex-offset="5" layout-align="none start">
+								<p class="t02 toUpper darkGreen-text no-margin">{{(cartDetails[$index].opciones[cartDetails[$index].cantidad].precio*entry.cuantity) | currency}}</p>
+							</div>
+						</div>
+						<div layout="row" layout-align="center center">
+							<p class="t05 toUpper darkGreen-text small-text" flex="25">Productos Extra</p>
+							<hr flex="75" size="1px">
+						</div>
+						<div layout="row" class="smallGutter-bot" ng-repeat="entry in cart | filter: {item: {type: 'extra'}}">
+							<div flex="20">
+								<img ng-src="entry.item.img" alt="" class="roundImg" width="50px">
+							</div>
+							<div flex="40" flex-offset="5" layout-align="start start">
+								<p class="t02 toUpper darkGreen-text no-margin">{{entry.item.name}}</p>
+								<p class="t05 small-text darkGreen-text no-margin">{{entry.item.category}}</p>
+							</div>
+							<div flex="15" layout-align="none start">
+								<img ng-src="entry.item.img" alt="imgcanasta" class="canastaImg">
+							</div>
+							<div flex="15" flex-offset="5" layout-align="none start">
+								<p class="t02 toUpper darkGreen-text no-margin">{{entry.item.price | currency}}</p>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+		</div>
+	</md-dialog-content>
+	<div class="md-actions" layout="row">
+		<span flex></span>
+		<md-button ng-click="answer(true)" style="margin-right:20px;" >
+				Aceptar
+		</md-button>
+	</div>
+</form>
+</md-dialog>
+

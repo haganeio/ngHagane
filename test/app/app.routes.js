@@ -5,6 +5,6 @@ app.config(function($routeProvider) {
 		controller: 'AdminMainCtlr'
 	})
 	.otherwise({
-		redirectTo: '/p/users'
+		redirectTo: '/admin'
 	});
 });

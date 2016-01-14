@@ -1,0 +1,22 @@
+<form ng-submit="login()" layout="column" layout-align="start center">
+	<md-input-container flex>
+		<input type="text" ng-model="credentials.username" placeholder="User" ng-required="true">
+	</md-input-container>
+	<md-input-container flex>
+		<input type="password" ng-model="credentials.password" placeholder="Password" ng-required="true">
+	</md-input-container>
+	<md-input-container flex>
+		<md-button type="submit">Entrar</md-button>
+		<md-button ng-click="logout()">logout</md-button>
+	</md-input-container>
+</form>
+
+<md-input-container flex>
+	<input type="text" ng-model="mensaje">
+	<md-button ng-click="apipost(mensaje)">POST</md-button>
+	<md-button ng-click="apiget(mensaje)">GET</md-button>
+	<md-button ng-click="apiput()">PUT</md-button>
+</md-input-container>
+{{server}}<br>
+{{returning}}<br>
+{{token}}<br>

@@ -1,0 +1,63 @@
+<md-dialog ng-cloak class="carritoModal">
+	<md-toolbar class="darkGreen-back">
+		<div class="md-toolbar-tools navbar" layout="row" layout-align="center center">
+			<a flex="15" layout="row" layout-align="center center" ng-click="emptyCart()">
+				<md-icon md-font-set="material-icons" class="white-text smallGutter-right">shopping_cart</md-icon>
+				<span class="t07 tiny-text">Vaciar</span>
+			</a>
+			<div flex="5" layout="row" layout-align="end center">
+				<div>
+					<a href="" ng-click="cancel()">
+						<md-icon md-font-set="material-icons" class="white-text smallGutter-left">close</md-icon>
+					</a>
+				</div>
+			</div>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div layout-align="center center" class="panelModal" ng-show="cart.length">
+	 		<div layout="row" class="smallGutter-bot" layout-align="start start" ng-repeat="entry in cart" ng-init="">
+	 			<div flex="20">
+					<img ng-src="{{cartDetails[$index].imagenCanasta}}" alt="imgcanasta" class="canastaImg">
+	 			</div>
+				<div flex="40" flex-offset="5" layout-align="start start">
+					<p class="t02 darkGreen-text toUpper no-margin">{{cartDetails[$index].nombre}}</p>
+					<p class="t03 darkGreen-text toUpper no-margin">{{cartDetails[$index].categoria}}</p>
+				</div>
+				<div flex="15" layout-align="none start">
+					<input type="number" class="t03 darkGreen-text countBox" ng-model="entry.cuantity"></input>
+				</div>
+				<div flex="15" flex-offset="5" layout-align="none start">
+					<p class="t02 toUpper darkGreen-text no-margin">{{(cartDetails[$index].opciones[cartDetails[$index].cantidad].precio*entry.cuantity) | currency}}</p>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center">
+				<p class="t05 toUpper darkGreen-text small-text" flex="25">Productos Extra</p>
+				<hr flex="75" size="1px">
+			</div>
+			<div layout="row" class="smallGutter-bot" ng-repeat="entry in cart | filter: {item: {type: 'extra'}}">
+				<div flex="20">
+					<img ng-src="entry.item.img" alt="" class="roundImg" width="50px">
+				</div>
+				<div flex="40" flex-offset="5" layout-align="start start">
+					<p class="t02 toUpper darkGreen-text no-margin">{{entry.item.name}}</p>
+					<p class="t05 small-text darkGreen-text no-margin">{{entry.item.category}}</p>
+				</div>
+				<div flex="15" layout-align="none start">
+					<img ng-src="entry.item.img" alt="imgcanasta" class="canastaImg">
+				</div>
+				<div flex="15" flex-offset="5" layout-align="none start">
+					<p class="t02 toUpper darkGreen-text no-margin">{{entry.item.price | currency}}</p>
+				</div>
+			</div>
+			<div layout="row" layout-align="center center">
+				<a href="#/compra" ng-click="hide()" class="t02 toUpper darkGreen-back contrastButton">
+					Comprar
+				</a>
+			</div>
+		</div>
+		<div layout="row" layout-align="center center" class="panelModal" ng-show="!cart.length" flex>
+			<span class="t01">Carrito vacio!</span>
+		</div>
+	</md-dialog-content>
+</md-dialog>
