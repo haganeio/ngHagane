@@ -58,6 +58,20 @@ ngHagane.provider('hagane', function () {
 			session.user.role = null;
 		};
 
+		hagane.session.authorize = function () {
+			if (session.user.accessToken =! null) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		hagane.session.identity = function () {
+			var defer = $q.defer();
+			defer.resolve(session.user);
+			return defer.promise;
+		};
+
 		hagane.login = function (credentials) {
 			var defer = $q.defer();
 
