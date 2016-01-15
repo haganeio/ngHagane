@@ -59,7 +59,7 @@ ngHagane.provider('hagane', function () {
 		hagane.session.authorize = function () {
 			var defer = $q.defer();
 			if (session.user.accessToken != null && session.user.accessToken != '') {
-				return $http
+				$http
 				.post(settings.host + '/User/authorize', session.user)
 				.then(function (res) {
 					if (res.data.success) {

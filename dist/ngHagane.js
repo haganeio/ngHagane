@@ -59,7 +59,7 @@ ngHagane.provider('hagane', function () {
 		hagane.session.authorize = function () {
 			var defer = $q.defer();
 			if (session.user.accessToken != null && session.user.accessToken != '') {
-				return $http
+				$http
 				.post(settings.host + '/User/authorize', session.user)
 				.then(function (res) {
 					if (res.data.success) {
@@ -219,6 +219,7 @@ ngHagane.constant('HG_AUTH_EVENTS', {
 	LOGIN_FAILED: 'auth-login-failed',
 	LOGOUT_SUCCESS: 'auth-logout-success',
 	SESSION_TIMEOUT: 'auth-session-timeout',
+	IS_AUTHORIZED: 'is-authorized',
 	NOT_AUTHENTICATED: 'auth-not-authenticated',
 	NOT_AUTHORIZED: 'auth-not-authorized'
 });
