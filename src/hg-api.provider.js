@@ -36,8 +36,12 @@ ngHagane.provider('hagane', function () {
 			return settings.appToken;
 		}
 
-		hagane.getUserObj = function () {
-			return session.user;
+		hagane.session.getRole = function () {
+			if (session.user.role != null) {
+				return session.user.role;
+			} else {
+				return false;
+			}
 		}
 
 		hagane.session.create = function (accessToken, userId, userRole) {
@@ -57,7 +61,7 @@ ngHagane.provider('hagane', function () {
 				var defer = $q.defer();
 
 				return $http
-				.post(settings.host + '/User/authorize', session.user.accessToken)
+				.post(settings.host + '/User/authorize', session.user)
 				.then(function (res) {
 					if (res.data.success) {
 						var user = res.data.message.user;
