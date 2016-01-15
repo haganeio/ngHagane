@@ -57,9 +57,8 @@ ngHagane.provider('hagane', function () {
 		};
 
 		hagane.session.authorize = function () {
+			var defer = $q.defer();
 			if (session.user.accessToken != null && session.user.accessToken != '') {
-				var defer = $q.defer();
-
 				return $http
 				.post(settings.host + '/User/authorize', session.user)
 				.then(function (res) {
@@ -73,11 +72,11 @@ ngHagane.provider('hagane', function () {
 					} else {
 						throw 'authorize failed';
 					}
-					return defer.promise;
 				});
 			} else {
-				return false;
+				defer.reject('No accessToken');
 			}
+			return defer.promise;
 		};
 
 		hagane.session.identity = function () {
