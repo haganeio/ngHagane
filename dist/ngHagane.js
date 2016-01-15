@@ -53,8 +53,24 @@ ngHagane.provider('hagane', function () {
 		};
 
 		hagane.session.authorize = function () {
-			if (session.user.accessToken != null) {
-				return true;
+			if (session.user.accessToken != null && session.user.accessToken != '') {
+				var defer = $q.defer();
+
+				return $http
+				.post(settings.host + '/User/authorize', session.user.accessToken)
+				.then(function (res) {
+					if (res.data.success) {
+						var user = res.data.message.user;
+						hagane.session.create(session.user.accessToken, user.id, user.role);
+
+						defer.resolve(res.data.message);
+					} else if (res.data.error) {
+						defer.reject(res.data.error);
+					} else {
+						throw 'authorize failed';
+					}
+					return defer.promise;
+				});
 			} else {
 				return false;
 			}
