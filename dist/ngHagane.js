@@ -179,7 +179,7 @@ ngHagane.provider('hagane', function () {
 			}
 		};
 
-		hagane.isAuthenticated = function () {
+		hagane.session.isAuth = function () {
 			return !!session.userId;
 		};
 
