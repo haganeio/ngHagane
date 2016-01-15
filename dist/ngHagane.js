@@ -53,13 +53,11 @@ ngHagane.provider('hagane', function () {
 
 		hagane.session.destroy = function () {
 			$cookies.put('hgsession', '');
-			session.user.accessToken = null;
-			session.user.id = null;
-			session.user.role = null;
+			session.user = {};
 		};
 
 		hagane.session.authorize = function () {
-			if (session.user.accessToken =! null) {
+			if (session.user.accessToken != null) {
 				return true;
 			} else {
 				return false;
