@@ -1,23 +1,11 @@
-var ngHagane = angular.module('ngHagane', []);
+var ngHagane = angular.module('ngHagane', ['ngCookies']);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
 
 ngHagane.provider('hagane', function () {
 	settings = {};
-	session = {};
-	session.user = {};
 
 	settings.host;
 	settings.appToken;
-
-	//retieve cookies
-	var $cookies;
-	angular.injector(['ngCookies']).invoke(['$cookies', function(_$cookies_) {
-		$cookies = _$cookies_;
-	}]);
-	var token = $cookies.get('hgsession');
-	if (token) {
-		session.user.accessToken = token;
-	}
 
 	this.setHost = function (host) {
 		settings.host = host;
@@ -28,9 +16,17 @@ ngHagane.provider('hagane', function () {
 	}
 
 	this.$get = ['$http', '$cookies', '$q', function ($http, $cookies, $q) {
-		hagane = {};
+		var session = {};
+		session.user = {};
+
+		var hagane = {};
 		hagane.session = {};
 		hagane.api = {};
+
+		var token = $cookies.get('hgsession');
+		if (token) {
+			session.user.accessToken = token;
+		}
 
 		hagane.getHost = function () {
 			return settings.host;
