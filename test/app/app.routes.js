@@ -4,6 +4,10 @@ app.config(function($routeProvider) {
 		templateUrl: 'app/admin/admin.html',
 		controller: 'AdminMainCtlr'
 	})
+	.when('/login', {
+		templateUrl: 'app/login/auth.html',
+		controller: 'AuthCtlr'
+	})
 	.otherwise({
 		redirectTo: '/admin'
 	});

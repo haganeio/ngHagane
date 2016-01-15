@@ -36,8 +36,8 @@ ngHagane.provider('hagane', function () {
 			return settings.appToken;
 		}
 
-		hagane.getAccessToken = function () {
-			return session.user.accessToken;
+		hagane.getUserObj = function () {
+			return session.user;
 		}
 
 		hagane.session.create = function (accessToken, userId, userRole) {
