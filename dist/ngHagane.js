@@ -107,13 +107,13 @@ ngHagane.provider('hagane', function () {
 
 		hagane.api.get = function (path) {
 			var defer = $q.defer();
-
-			var token = '';
-			if (session.accessToken) {
-				token = '/'+session.accessToken;
-			}
+			var config = {
+				params: {
+					accessToken: session.user.accessToken
+				}
+			};
 			return $http
-			.get(settings.host + path + token)
+			.get(settings.host + path, config)
 			.then(function (res) {
 				if (res.data.success) {
 					defer.resolve(res.data.message);
