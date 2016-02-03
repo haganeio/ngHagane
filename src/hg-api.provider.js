@@ -130,8 +130,8 @@ ngHagane.provider('hagane', function () {
 			var defer = $q.defer();
 
 			if (data) {
-				if (session.accessToken) {
-					data.accessToken = session.accessToken;
+				if (session.user.accessToken) {
+					data.accessToken = session.user.accessToken;
 				}
 				return $http
 				.post(settings.host + path, data)
@@ -154,8 +154,8 @@ ngHagane.provider('hagane', function () {
 			var defer = $q.defer();
 
 			if (data) {
-				if (session.accessToken) {
-					data.accessToken = session.accessToken;
+				if (session.user.accessToken) {
+					data.accessToken = session.user.accessToken;
 				}
 				return $http
 				.put(settings.host + path, data)
@@ -178,8 +178,8 @@ ngHagane.provider('hagane', function () {
 			var defer = $q.defer();
 
 			if (data) {
-				if (session.accessToken) {
-					data.accessToken = session.accessToken;
+				if (session.user.accessToken) {
+					data.accessToken = session.user.accessToken;
 				}
 				return $http
 				.delete(settings.host + path, data)
