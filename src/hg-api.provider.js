@@ -43,6 +43,14 @@ ngHagane.provider('hagane', function () {
 				return false;
 			}
 		}
+		
+		hagane.session.getId = function() {
+			if(session.user.id != null) {
+				return session.user.id;
+			} else {
+				return false;
+			}
+		}
 
 		hagane.session.create = function (accessToken, userId, userRole) {
 			$cookies.put('hgsession', accessToken);

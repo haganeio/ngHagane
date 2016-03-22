@@ -43,6 +43,14 @@ ngHagane.provider('hagane', function () {
 				return false;
 			}
 		}
+		
+		hagane.session.getId = function() {
+			if(session.user.id != null) {
+				return session.user.id;
+			} else {
+				return false;
+			}
+		}
 
 		hagane.session.create = function (accessToken, userId, userRole) {
 			$cookies.put('hgsession', accessToken);
@@ -209,6 +217,24 @@ ngHagane.provider('hagane', function () {
 		// 	return (hagane.isAuthenticated() &&
 		// 		authorizedRoles.indexOf(session.userRole) !== -1);
 		// };
+
+
+		//Base class for every hagane resource
+		hagane.resource = function(resUri, detectChange) {
+			function update() {
+				hagane.api.get(uri).then(function(data) {
+					for(var prop in data) {
+						this[prop] = data[prop];
+					}
+				});
+			}
+			
+			//Change detection
+			if(detectChange) {
+				//Version 1: Just sync everything every 5 min
+				setInterval(update, )
+			}
+		}
 
 		return hagane;
 	}];
