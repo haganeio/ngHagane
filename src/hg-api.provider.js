@@ -1,4 +1,4 @@
-var ngHagane = angular.module('ngHagane', ['ngCookies']);
+var ngHagane = angular.module('ngHagane', ['ngCookies', 'ngFileUpload']);
 ngHagane.constant('MODULE_VERSION', '0.0.1');
 
 ngHagane.provider('hagane', function () {
