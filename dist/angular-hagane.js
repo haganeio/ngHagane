@@ -182,29 +182,27 @@ ngHagane.provider('hagane', function () {
 			}
 		};
 
-		hagane.api.delete = function (path, data) {
+		hagane.api.delete = function (path) {
 			var defer = $q.defer();
-
-			if (data) {
-				if (session.user.accessToken) {
-					data.accessToken = session.user.accessToken;
+			var config = {
+				params: {
+					accessToken: session.user.accessToken
 				}
-				return $http
-				.delete(settings.host + path, data)
-				.then(function (res) {
-					if (res.data.success) {
-						defer.resolve(res.data.message);
-					} else if (res.data.error) {
-						defer.reject(res.data.error);
-					} else {
-						throw 'hagane post failed';
-					}
-					return defer.promise;
-				});
-			} else {
-				throw 'hagane delete no data';
-			}
+			};
+			return $http
+			.delete(settings.host + path, config)
+			.then(function (res) {
+				if (res.data.success) {
+					defer.resolve(res.data.message);
+				} else if (res.data.error) {
+					defer.reject(res.data.error);
+				} else {
+					throw 'hagane post failed';
+				}
+				return defer.promise;
+			});
 		};
+
 
 		hagane.session.isAuth = function () {
 			return !!session.userId;
