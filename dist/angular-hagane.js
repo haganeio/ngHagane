@@ -158,6 +158,37 @@ ngHagane.provider('hagane', function () {
 			}
 		};
 
+		hagane.api.postImage = function (path, file, data) {
+			var defer = $q.defer();
+
+			if (file) {
+				if (session.user.accessToken) {
+					data.accessToken = session.user.accessToken;
+				}
+				return Upload.upload({
+					url: settings.host + path,
+					method: 'POST',
+					file: file,
+					sendFieldsAs: 'form',
+					fields: {
+						jsonData: Upload.json(data)
+					}
+				})
+				.then(function (res) {
+					if (res.data.success) {
+						defer.resolve(res.data.message);
+					} else if (res.data.error) {
+						defer.reject(res.data.error);
+					} else {
+						throw 'hagane image post failed';
+					}
+					return defer.promise;
+				});
+			} else {
+				throw 'hagane image post no data';
+			}
+		};
+
 		hagane.api.put = function (path, data) {
 			var defer = $q.defer();
 
