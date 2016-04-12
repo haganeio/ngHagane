@@ -15,7 +15,7 @@ ngHagane.provider('hagane', function () {
 		settings.appToken = appToken;
 	}
 
-	this.$get = ['$http', '$cookies', '$q', function ($http, $cookies, $q) {
+	this.$get = ['$http', '$cookies', '$q', 'Upload', function ($http, $cookies, $q, Upload) {
 		var session = {};
 		session.user = {};
 
