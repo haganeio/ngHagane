@@ -158,7 +158,7 @@ ngHagane.provider('hagane', function () {
 			}
 		};
 
-		hagane.api.postImage = function (path, file, data) {
+		hagane.api.postFile = function (path, file, data) {
 			var defer = $q.defer();
 
 			if (file) {
@@ -180,12 +180,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						//throw 'hagane image post failed';
+						//throw 'hagane file post failed';
 					}
 					return defer.promise;
 				});
 			} else {
-				//throw 'hagane image post no data';
+				//throw 'hagane file post no data';
 			}
 		};
 
