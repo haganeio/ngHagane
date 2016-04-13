@@ -78,7 +78,7 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						throw 'authorize failed';
+						//throw 'authorize failed';
 					}
 				});
 			} else {
@@ -107,7 +107,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					throw 'login failed';
+					//throw 'login failed';
 				}
 				return defer.promise;
 			});
@@ -128,7 +128,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					throw 'hagane get failed';
+					//throw 'hagane get failed';
 				}
 				return defer.promise;
 			});
@@ -149,12 +149,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						throw 'hagane post failed';
+						//throw 'hagane post failed';
 					}
 					return defer.promise;
 				});
 			} else {
-				throw 'hagane post no data';
+				//throw 'hagane post no data';
 			}
 		};
 
@@ -180,12 +180,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						throw 'hagane image post failed';
+						//throw 'hagane image post failed';
 					}
 					return defer.promise;
 				});
 			} else {
-				throw 'hagane image post no data';
+				//throw 'hagane image post no data';
 			}
 		};
 
@@ -204,12 +204,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						throw 'hagane post failed';
+						//throw 'hagane post failed';
 					}
 					return defer.promise;
 				});
 			} else {
-				throw 'hagane put no data';
+				//throw 'hagane put no data';
 			}
 		};
 
@@ -228,7 +228,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					throw 'hagane post failed';
+					//throw 'hagane post failed';
 				}
 				return defer.promise;
 			});
