@@ -78,7 +78,7 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						//throw 'authorize failed';
+						console.log('authorize failed');
 					}
 				});
 			} else {
@@ -107,7 +107,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					//throw 'login failed';
+					console.log('login failed');
 				}
 				return defer.promise;
 			});
@@ -128,7 +128,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					//throw 'hagane get failed';
+					console.log('hagane get failed');
 				}
 				return defer.promise;
 			});
@@ -149,12 +149,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						//throw 'hagane post failed';
+						console.log('hagane post failed');
 					}
 					return defer.promise;
 				});
 			} else {
-				//throw 'hagane post no data';
+				console.log('hagane post no data');
 			}
 		};
 
@@ -180,12 +180,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						//throw 'hagane file post failed';
+						console.log('hagane file post failed');
 					}
 					return defer.promise;
 				});
 			} else {
-				//throw 'hagane file post no data';
+				console.log('hagane file post no data');
 			}
 		};
 
@@ -204,12 +204,12 @@ ngHagane.provider('hagane', function () {
 					} else if (res.data.error) {
 						defer.reject(res.data.error);
 					} else {
-						//throw 'hagane post failed';
+						console.log('hagane post failed');
 					}
 					return defer.promise;
 				});
 			} else {
-				//throw 'hagane put no data';
+				console.log('hagane put no data');
 			}
 		};
 
@@ -228,7 +228,7 @@ ngHagane.provider('hagane', function () {
 				} else if (res.data.error) {
 					defer.reject(res.data.error);
 				} else {
-					//throw 'hagane post failed';
+					console.log('hagane post failed');
 				}
 				return defer.promise;
 			});
@@ -238,14 +238,6 @@ ngHagane.provider('hagane', function () {
 		hagane.session.isAuth = function () {
 			return !!session.userId;
 		};
-
-		// hagane.isAuthorized = function (authorizedRoles) {
-		// 	if (!angular.isArray(authorizedRoles)) {
-		// 		authorizedRoles = [authorizedRoles];
-		// 	}
-		// 	return (hagane.isAuthenticated() &&
-		// 		authorizedRoles.indexOf(session.userRole) !== -1);
-		// };
 
 		return hagane;
 	}];
