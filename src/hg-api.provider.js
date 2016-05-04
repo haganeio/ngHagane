@@ -185,8 +185,8 @@ ngHagane.provider('hagane', function () {
 					return defer.promise;
 				});
 			} else {
-				console.log('hagane file post no data');
-				return hagane.api.post = function (path, data);
+				// console.log('hagane file post no data');
+				return hagane.api.post(path, data);
 			}
 		};
 
