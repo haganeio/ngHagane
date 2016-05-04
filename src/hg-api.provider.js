@@ -159,9 +159,9 @@ ngHagane.provider('hagane', function () {
 		};
 
 		hagane.api.postFile = function (path, file, data) {
-			var defer = $q.defer();
-
 			if (file) {
+				var defer = $q.defer();
+
 				if (session.user.accessToken) {
 					data.accessToken = session.user.accessToken;
 				}
@@ -186,6 +186,7 @@ ngHagane.provider('hagane', function () {
 				});
 			} else {
 				console.log('hagane file post no data');
+				return hagane.api.post = function (path, data);
 			}
 		};
 
