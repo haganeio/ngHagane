@@ -117,7 +117,7 @@ ngHagane.provider('hagane', function () {
 			var defer = $q.defer();
 
 			return $http
-			.post(settings.host + '/User/logout', session.user.accessToken)
+			.post(settings.host + '/User/logout', {accessToken: session.user.accessToken})
 			.then(function (res) {
 				if (res.data.success) {
 					var user = res.data.message.user;
