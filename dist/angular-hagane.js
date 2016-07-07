@@ -113,6 +113,26 @@ ngHagane.provider('hagane', function () {
 			});
 		}
 
+		hagane.logout = function (credentials) {
+			var defer = $q.defer();
+
+			return $http
+			.post(settings.host + '/User/logout', credentials)
+			.then(function (res) {
+				if (res.data.success) {
+					var user = res.data.message.user;
+					hagane.session.destroy();
+
+					defer.resolve(res.data.message);
+				} else if (res.data.error) {
+					defer.reject(res.data.error);
+				} else {
+					console.log('logout failed');
+				}
+				return defer.promise;
+			});
+		}
+
 		hagane.api.get = function (path) {
 			var defer = $q.defer();
 			var config = {
@@ -247,6 +267,7 @@ ngHagane.provider('hagane', function () {
 ngHagane.constant('HG_AUTH_EVENTS', {
 	LOGIN_SUCCESS: 'auth-login-success',
 	LOGIN_FAILED: 'auth-login-failed',
+	LOGOUT_FAILED: 'auth-logout-failed',
 	LOGOUT_SUCCESS: 'auth-logout-success',
 	SESSION_TIMEOUT: 'auth-session-timeout',
 	IS_AUTHORIZED: 'is-authorized',

@@ -113,6 +113,26 @@ ngHagane.provider('hagane', function () {
 			});
 		}
 
+		hagane.logout = function (credentials) {
+			var defer = $q.defer();
+
+			return $http
+			.post(settings.host + '/User/logout', credentials)
+			.then(function (res) {
+				if (res.data.success) {
+					var user = res.data.message.user;
+					hagane.session.destroy();
+
+					defer.resolve(res.data.message);
+				} else if (res.data.error) {
+					defer.reject(res.data.error);
+				} else {
+					console.log('logout failed');
+				}
+				return defer.promise;
+			});
+		}
+
 		hagane.api.get = function (path) {
 			var defer = $q.defer();
 			var config = {
