@@ -113,7 +113,7 @@ ngHagane.provider('hagane', function () {
 			});
 		}
 
-		hagane.logout = function (credentials) {
+		hagane.logout = function () {
 			var defer = $q.defer();
 
 			return $http
