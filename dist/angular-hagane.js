@@ -113,6 +113,26 @@ ngHagane.provider('hagane', function () {
 			});
 		}
 
+		hagane.logout = function () {
+			var defer = $q.defer();
+
+			return $http
+			.post(settings.host + '/User/logout', {accessToken: session.user.accessToken})
+			.then(function (res) {
+				if (res.data.success) {
+					var user = res.data.message.user;
+					hagane.session.destroy();
+
+					defer.resolve(res.data.message);
+				} else if (res.data.error) {
+					defer.reject(res.data.error);
+				} else {
+					console.log('logout failed');
+				}
+				return defer.promise;
+			});
+		}
+
 		hagane.api.get = function (path) {
 			var defer = $q.defer();
 			var config = {
@@ -144,6 +164,7 @@ ngHagane.provider('hagane', function () {
 				return $http
 				.post(settings.host + path, data)
 				.then(function (res) {
+					delete data.accessToken;
 					if (res.data.success) {
 						defer.resolve(res.data.message);
 					} else if (res.data.error) {
@@ -158,7 +179,7 @@ ngHagane.provider('hagane', function () {
 			}
 		};
 
-		hagane.api.postFile = function (path, file, data) {
+		hagane.api.postFile = function (path, file, data, postData) {
 			if (file) {
 				var defer = $q.defer();
 
@@ -168,13 +189,12 @@ ngHagane.provider('hagane', function () {
 				return Upload.upload({
 					url: settings.host + path,
 					method: 'POST',
-					file: file,
-					sendFieldsAs: 'form',
-					fields: {
-						jsonData: Upload.json(data)
-					}
+					// file: file,
+					data: {file: file, jsonData: Upload.json(data), postData: postData}
+					// sendFieldsAs: 'form'
 				})
 				.then(function (res) {
+					delete data.accessToken;
 					if (res.data.success) {
 						defer.resolve(res.data.message);
 					} else if (res.data.error) {
@@ -243,7 +263,6 @@ ngHagane.provider('hagane', function () {
 		return hagane;
 	}];
 });
-
 ngHagane.constant('HG_AUTH_EVENTS', {
 	LOGIN_SUCCESS: 'auth-login-success',
 	LOGIN_FAILED: 'auth-login-failed',
